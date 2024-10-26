@@ -44,7 +44,7 @@ public class Double_Linked_List {
     //Insert at a Particular Position
     public void addPosition(int idx, int data) {
         Node temp = new Node(data);
-        if(head == null) {
+        if(head == null && idx == 0) {
             head = tail = temp;
             return;
         }
