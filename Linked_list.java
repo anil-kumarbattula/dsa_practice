@@ -43,13 +43,12 @@ public class Linked_list {
     }
     //add at particular position
     public void addPosition(int idx, int data){
-        
-        if(head == null){
-            System.out.println("List is Empty");
+        Node newNode = new Node(data);
+        if(head == null && idx == 0){
+            head = newNode;
             return;
         }
         if(idx == 0){
-            Node newNode = new Node(data);
             newNode.next = head;
             head = newNode;
             return;
@@ -62,7 +61,10 @@ public class Linked_list {
             System.out.println("Index is out of range");
             return;
         }
-        Node newNode = new Node(data);
+        if(currNode.next == null) {
+            currNode.next = newNode;
+            return;
+        }
         newNode.next = currNode.next;
         currNode.next = newNode;
     }
@@ -104,6 +106,10 @@ public class Linked_list {
         }
         if(currNode == null){
             System.out.println("Index is out of range");
+            return;
+        }
+        if(currNode.next == null) {
+            currNode = null;
             return;
         }
         currNode.next = currNode.next.next;
