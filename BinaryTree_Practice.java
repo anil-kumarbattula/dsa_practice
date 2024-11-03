@@ -88,11 +88,55 @@ public class BinaryTree_Practice {
                 int rightsum = sumOfNodes(root.right);
                 return leftsum + rightsum + root.data;
             }
+            public static int height(Node root) {
+                if (root == null) {
+                    return 0;
+                }
+                int leftHeight = height(root.left);
+                int rightHeight = height(root.right);
+
+                return Math.max(leftHeight, rightHeight)+1;
+            }
+            public static int treeDiameter(Node root) { //O(n*n)
+                if(root == null)
+                return 0;
+                int diam1 = treeDiameter(root.left);
+                int diam2 = treeDiameter(root.right); //O(n)
+                int diam3 = height(root.left) + height(root.right) + 1; //O(n)
+
+                return Math.max(diam3, Math.max(diam2, diam2));
+            }
+            static class TreeInfo
+            {
+                int ht;
+                int diam;
+
+                TreeInfo(int ht, int diam) {
+                    this.ht = ht;
+                    this.diam = diam;
+                }
+            }
+            public static TreeInfo diameter(Node root) {
+                if(root == null) {
+                    return new TreeInfo(0,0);
+                }
+                TreeInfo left = diameter(root.left);
+                TreeInfo right = diameter(root.right);
+                int myHeight = Math.max(left.ht, right.ht) + 1;
+
+                int diam1 = left.diam;
+                int diam2 = right.diam;
+                int diam3 = left.ht + right.ht + 1;
+                int mydiam = Math.max(diam3, Math.max(diam2,diam1));
+
+                TreeInfo myInfo = new TreeInfo(myHeight, mydiam);
+                return myInfo;
+            }
         public static void main(String args[]) {
             int[] nodes = {1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,-1};
             BinaryTree tree = new BinaryTree();
             Node root = tree.buildTree(nodes);
-            System.out.println(sumOfNodes(root));
+            System.out.println(diameter(root).diam + " Height is " + diameter(root).ht );
         }
 
 }
